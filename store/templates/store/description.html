@@ -1,0 +1,25 @@
+{% extends "store/main.html" %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+{% block content %}
+
+<section id="description" style="height: 140vh">
+    <a class="btn" href="{% url 'store' %}">&#x2190; Continue Shopping</a><br><br>
+    <div class="container flex">
+      <div class="left">
+        <div class="main_image">
+          <img src="{{product.imageURL}}" class="slide">
+        </div>
+      </div>
+      <div class="right">
+        <h3>{{product.name}}</h3>
+        <h4> <small>$</small>{{product.price}} </h4>
+        <p>{{product.description}}</p>
+
+        <button data-product="{{product.id}}" data-action="add" class="btn add-btn update-cart" style="margin-top: 1rem;"><i class="ri-shopping-cart-line"></i> Add to Cart</button>
+      </div>
+    </div>
+  </section>
+    
+{% endblock %}

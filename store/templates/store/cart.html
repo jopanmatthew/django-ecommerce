@@ -1,0 +1,53 @@
+{% extends 'store/main.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+{% block content %}
+    <div style="display: flex; margin-bottom: 2.5%;">
+        <a class="btn" href="{% url 'store' %}" style="margin-left: 1%; background-color: #64748b;">&#x2190; Continue Shopping</a><br><br>
+        {% if items %}
+        <a class="btn" href="{% url 'checkout' %}" style="margin-left: 1%;">Checkout <i class="ri-truck-line"></i></a><br><br>
+        {% endif %}
+    </div>
+    <div class="small-container cart">
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+
+            {% if items %}
+                {% for item in items %}
+                <tr>
+                    <td><div class="cart-info">
+                        <img src="{{item.product.imageURL}}">
+                        <div class="cart-content">
+                            <p class="cart-title">{{item.product.name}}</p>
+                            <small>Price: ${{item.product.price|floatformat:2}}</small>
+                        </div>
+                    </div></td>
+                    <td>
+                        <div class="add2 flex1">
+                            <i data-product={{item.product.id}} data-action="add" class="ri-add-fill update-cart"></i>
+                            <label style="margin-left: 1.2rem;">{{item.quantity}}</label>
+                            <i data-product={{item.product.id}} data-action="remove" class="ri-subtract-line update-cart" style="margin-left: 1.2rem;"></i>
+                        </div>
+                    </td>
+                    <td><p class="subtotal">${{item.get_total}}</p></td>
+                </tr>
+                {% endfor %}
+
+        </table>
+
+        <div class="total-price">
+            <table>
+                <tr>
+                    <td>Total</td>
+                    <td>${{order.get_cart_total|floatformat:2}}</td>
+                </tr>
+            </table>
+        </div>
+        {% endif %}
+    </div> 
+{% endblock content %}

@@ -1,0 +1,75 @@
+{% extends 'store/main.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+{% block content %}
+<!-- Product Section Start -->
+<section class="section__container product__container">
+    <h2 class="section__header">Trending Products</h2>
+    <p class="section__subheader">
+      Discover the Hottest Picks: Elevate Your Style with Our Curated
+      Collection of Trending Women's Fashion Products.
+    </p>
+    <div class="product__grid">
+      {% for product in products %}
+        <div class="product__card" href="{% url 'description' id=product.id %}">
+          <a href="{% url 'description' id=product.id %}" style="color: black;">
+            <img src="{{product.imageURL}}" alt="product" />
+          </a>
+          <div class="product__card__content">
+            <h4>{{product.name}}</h4>
+            <h3>${{product.price}}</h3>
+            <button data-product="{{product.id}}" data-action="add" class="btn add-btn update-cart" style="margin-top: 1rem;"><i class="ri-shopping-cart-line"></i> Add to Cart</button>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+<!-- Product Section Ends -->
+
+<!-- Footer Section Start -->
+<footer class="section__container footer__container" id="footer" style="background-color: #f4e5ec;">
+  <div class="footer__col">
+    <h4>CONTACT INFO</h4>
+    <p>
+      <span><i class="ri-map-pin-2-fill"></i></span>
+      Jakarta, Indonesia
+    </p>
+    <p>
+      <span><i class="ri-mail-fill"></i></span>
+      support@fashion.com
+    </p>
+    <p>
+      <span><i class="ri-phone-fill"></i></span>
+      (+62) 3456 789
+    </p>
+  </div>
+  <div class="footer__col">
+    <h4>COMPANY</h4>
+    <a href="#">Home</a>
+    <a href="#">Store</a>
+    <a href="#">Blog</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="footer__col">
+    <h4>USEFUL LINK</h4>
+    <a href="#">Help</a>
+    <a href="#">Track My Order</a>
+    <a href="#">Men</a>
+    <a href="#">Women</a>
+    <a href="#">Dresses</a>
+  </div>
+  <div class="footer__col">
+    <h4>INSTAGRAM</h4>
+    <div class="instagram__grid">
+      <img src="{% static 'images/instagram-1.jpg' %}" alt="instagram" />
+      <img src="{% static 'images/instagram-2.jpg' %}" alt="instagram" />
+      <img src="{% static 'images/instagram-3.jpg' %}" alt="instagram" />
+      <img src="{% static 'images/instagram-4.jpg' %}" alt="instagram" />
+      <img src="{% static 'images/instagram-5.jpg' %}" alt="instagram" />
+      <img src="{% static 'images/instagram-6.jpg' %}" alt="instagram" />
+    </div>
+  </div>
+</footer>
+<!-- Footer Section Ends -->
+{% endblock content %}

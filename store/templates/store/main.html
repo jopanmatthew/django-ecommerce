@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion E-commerce</title>
+
+    <!-- CSS Link -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+    <!-- Remixicon Link -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"/>
+
+    <!-- JavaScript -->
+    <script type="text/javascript">
+        var user = '{{request.user}}';
+
+        function getToken(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getToken('csrftoken');
+
+    function getCookie(name) {
+        // Split cookie string and get all individual name=value parse in an array
+        var cookieArr = document.cookie.split(";");
+
+        // Loop through the array elements
+        for (var i = 0; i < cookieArr.length; i++) {
+            var cookiePair = cookieArr[i].split("=");
+
+            if (name == cookiePair[0].trim()) {
+                return decodeURIComponent(cookiePair[1]);
+            }
+        }
+
+        // Return null if not found
+        return null;
+    }
+
+    var cart = JSON.parse(getCookie('cart'));
+    if (cart == undefined) {
+        cart = {}
+        console.log('Cart was created');
+        document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/";
+    }
+
+    console.log("Cart:", cart);
+
+    </script>
+</head>
+<body>
+
+    <!-- Navbar Start -->
+    <nav>
+      <ul class="nav__links">
+        <li class="link"><a href="{% url 'hero' %}">Home</a></li>
+        <li class="link"><a href="{% url 'store' %}">Store</a></li>
+      </ul>
+      <div class="nav__logo">
+        <a href="{% url 'hero' %}">Fashion<span>.</span></a>
+      </div>
+      <div class="nav__icons">
+        <span>
+          {% if user.is_authenticated %}
+          <a href="{% url 'logout' %}">{{request.user}} <i class="ri-user-line"></i></a>
+          {% else %}
+          <a href="{% url 'login' %}"><i class="ri-user-line"></i></a>
+          {% endif %}
+        </span>
+        <div class="shopping">
+          <span>
+            <a href="{% url 'cart' %}"><i class="ri-shopping-bag-line"></i></a>
+            <p id="total">{{cartItems}}</p>
+          </span>
+        </div>
+      </div>
+    </nav>
+    <!-- Navbar Ends -->
+    
+    <div class="content">
+        {% block content %}
+         
+        {% endblock content %}
+    </div>
+    
+    <!-- JQuery, Popper.JS CDN Link -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- Script JS -->
+    <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+</body>
+</html>
