@@ -4,17 +4,18 @@
 
 {% block content %}
     <div class="container-2">
-        <div class="header-bar">
-            <h1>Login</h1>
+        <div class="login form">
+            <header>Login</header>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input class="btn-acc" type="Submit" value="Login" style="margin: 2rem 0 .5rem 0;">
+            </form>
+            <div class="signup">
+                <span class="signup">Don't have an account?
+                    <label for="check"> <a href="{% url 'register' %}">Register</a></label>
+                </span>
             </div>
-        
-            <div class="card-body">
-                <form method="POST">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <input class="btn-acc" type="Submit" value="Login" style="margin: 2rem 0 .5rem 0;">
-                </form>
-                <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
-            </div>
+        </div>
     </div>
 {% endblock content %}

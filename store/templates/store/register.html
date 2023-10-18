@@ -3,18 +3,26 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
 {% block content %}
-    <div class="container-2">
-        <div class="header-bar">
-            <h1>Register</h1>
-        </div>
-        
-        <div class="card-body">
+    <div class="container-2" style="margin-top: 15%;">
+        <div class="registration form">
+            <header>Register</header>
             <form method="POST">
                 {% csrf_token %}
-                {{ form.as_p }}
+                <label>{{ form.username.label }}</label>
+                {{ form.username }}
+
+                <label>{{ form.password1.label }}</label>
+                {{ form.password1 }}
+
+                <label>{{ form.password2.label }}</label>
+                {{ form.password2 }}
                 <input class="btn-acc" type="Submit" value="Register" style="margin: 2rem 0 .5rem 0;">
             </form>
-            <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+            <div class="signup">
+                <span class="signup">Already have an account?
+                    <label for="check"><a href="{% url 'login' %}">Login</a></label>
+                </span>
+            </div>
         </div>
     </div>
 {% endblock content %}
